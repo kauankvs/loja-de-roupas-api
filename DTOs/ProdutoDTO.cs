@@ -1,5 +1,7 @@
 ﻿using LojaDeRoupasAPI.Enums;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace LojaDeRoupasAPI.DTOs
 {
@@ -15,6 +17,8 @@ namespace LojaDeRoupasAPI.DTOs
         [DataType(DataType.Currency)]
         public double Preco { get; set; }
 
+        [JsonProperty("tipos")]
+        [JsonConverter(typeof(StringEnumConverter))]
         [Required(ErrorMessage = "Esse campo é obrigatório!")]
         public Tipo[] Tipos { get; set; }
     }

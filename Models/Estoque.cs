@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LojaDeRoupasAPI.Models
 {
-    public class QuantidadePorTamanho
+    public class Estoque
     {
         [Key]
         public int QuantidadePorTamanhoId { get; set; }
