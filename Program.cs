@@ -37,6 +37,19 @@ builder.Services.AddAuthentication(auth =>
         };
     });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddCors(options => options.AddPolicy(name: "LojaDeRoupasCORS", policy =>
+{
+    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+}));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -44,12 +57,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseSession();
+app.Use(async (context, next) =>
+{
+    string token = context.Session.GetString("Token");
+    if (token != null)
+        context.Request.Headers.Add("Authorization", "Bearer " + token);
+    await next();
+});
+app.UseCors("LojaDeRoupasCORS");
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

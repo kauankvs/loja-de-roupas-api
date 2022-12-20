@@ -11,6 +11,6 @@ namespace LojaDeRoupasAPI.Models
         public string? Descricao { get; set; }
         public double Preco { get; set; }
         public Tipo[] Tipos { get; set; }
-        public ICollection<QuantidadePorTamanho>? QuantidadePorTamanho { get; set; }
+        public ICollection<Estoque>? QuantidadePorTamanho { get; set; }
     }
 }

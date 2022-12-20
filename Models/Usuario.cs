@@ -14,5 +14,6 @@ namespace LojaDeRoupasAPI.Models
         public byte[] Hash { get; set; }
         public byte[] Salt { get; set; }
         public NivelDeAutorizacao Nivel { get; set; }
+        public DateTime DataDeCriacao { get; set; }
     }
 }
