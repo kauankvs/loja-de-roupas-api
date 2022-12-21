@@ -6,6 +6,7 @@ using LojaDeRoupasAPI.Models;
 using LojaDeRoupasAPI.Services.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -134,6 +135,36 @@ namespace LojaDeRoupasAPI.Services
                 });
             }
             return new OkObjectResult(usuariosDisplay);
+        }
+
+        public async Task<ActionResult> SubirUsuarioParaNivelDoisAsync(string chave, string email) 
+        {
+            if (chave != Settings.ChaveNivelDois)
+                return new BadRequestResult();
+
+            bool usuarioExiste = await _usuarioAuth.VerificarSeUsuarioExisteAsync(email);
+            if (usuarioExiste.Equals(false))
+                return new NotFoundResult();
+
+            Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.Email.Equals(email));
+            usuario.Nivel = NivelDeAutorizacao.Dois;
+            await _context.SaveChangesAsync();
+            return new AcceptedResult();
+        }
+
+        public async Task<ActionResult> SubirUsuarioParaNivelTresAsync(string chave, string email)
+        {
+            if (chave != Settings.ChaveNivelTres)
+                return new BadRequestResult();
+
+            bool usuarioExiste = await _usuarioAuth.VerificarSeUsuarioExisteAsync(email);
+            if (usuarioExiste.Equals(false))
+                return new NotFoundResult();
+
+            Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.Email.Equals(email));
+            usuario.Nivel = NivelDeAutorizacao.Tres;
+            await _context.SaveChangesAsync();
+            return new AcceptedResult();
         }
     }
 }

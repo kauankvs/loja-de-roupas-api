@@ -16,5 +16,7 @@ namespace LojaDeRoupasAPI.Services.Intefaces
         public Task<ActionResult> MudarSenhaDaContaAsync(string email, string senhaAtual, string senhaNova);
         public Task<ActionResult<UsuarioDisplayDTO>> DisplayMeuUsuarioAsync(string email);
         public Task<ActionResult<List<UsuarioDisplayDTO>>> DisplayUsuariosAsync();
+        public Task<ActionResult> SubirUsuarioParaNivelDoisAsync(string chave, string email);
+        public Task<ActionResult> SubirUsuarioParaNivelTresAsync(string chave, string email);
     }
 }

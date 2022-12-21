@@ -49,6 +49,18 @@ namespace LojaDeRoupasAPI.Controllers
         public async Task<ActionResult<Usuario>> MudarSenhaDaContaAsync(string senhaAtual, string senhaNova)
             => await _service.MudarSenhaDaContaAsync(User.FindFirstValue(ClaimTypes.Email), senhaAtual, senhaNova);
 
+        [HttpPut]
+        [Route("mudar/nivel-dois")]
+        [Authorize]
+        public async Task<ActionResult> SubirUsuarioParaNivelDoisAsync(string chave, string email)
+            => await _service.SubirUsuarioParaNivelDoisAsync(chave, email);
+
+        [HttpPut]
+        [Route("mudar/nivel-tres")]
+        [Authorize(Roles = "Dois, Tres")]
+        public async Task<ActionResult> SubirUsuarioParaNivelTresAsync(string chave, string email)
+            => await _service.SubirUsuarioParaNivelTresAsync(chave, email);
+
         [HttpGet]
         [Route("conta")]
         [Authorize]
@@ -57,11 +69,11 @@ namespace LojaDeRoupasAPI.Controllers
 
         [HttpGet]
         [Route("usuarios")]
-        [Authorize(Roles = "Um, Dois")]
+        [Authorize(Roles = "Dois, Tres")]
         public async Task<ActionResult<List<UsuarioDisplayDTO>>> DisplayUsuariosAsync() 
             => await _service.DisplayUsuariosAsync();
 
-
+        
 
     }
 }
