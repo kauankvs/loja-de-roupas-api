@@ -1,4 +1,4 @@
-﻿namespace LojaDeRoupasAPI.Services
+﻿namespace LojaDeRoupasAPI.Services.Intefaces
 {
     public interface IUsuarioAuthService
     {

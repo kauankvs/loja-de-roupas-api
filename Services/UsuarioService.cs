@@ -3,8 +3,10 @@ using LojaDeRoupasAPI.Controllers;
 using LojaDeRoupasAPI.DTOs;
 using LojaDeRoupasAPI.Enums;
 using LojaDeRoupasAPI.Models;
+using LojaDeRoupasAPI.Services.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -61,7 +63,7 @@ namespace LojaDeRoupasAPI.Services
             return token;
         }
 
-        public async Task<ActionResult<Usuario>> DeletarUsuarioAsync(string email, string senha)
+        public async Task<ActionResult> DeletarUsuarioAsync(string email, string senha)
         {
             if (_usuarioAuth.VerificarSeSenhaECorretaAsync(senha, email).Equals(false))
                 return new ConflictResult();
@@ -70,6 +72,68 @@ namespace LojaDeRoupasAPI.Services
             _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
             return new OkResult();
+        }
+
+        public async Task<ActionResult> MudarEmailDaContaAsync(string emailAtual, string emailNovo) 
+        {
+            bool emailNovoEstaEmUso = await _usuarioAuth.VerificarSeUsuarioExisteAsync(emailNovo);
+            if (emailNovoEstaEmUso.Equals(true))
+                return new ConflictResult();
+
+            Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.Email.Equals(emailAtual));
+            usuario.Email = emailNovo;
+            await _context.SaveChangesAsync();
+            return new AcceptedResult();
+        }
+
+        public async Task<ActionResult> MudarSenhaDaContaAsync(string email, string senhaAtual, string senhaNova) 
+        {
+            byte[] hash, salt;
+            bool senhaAtualECorreta = await _usuarioAuth.VerificarSeSenhaECorretaAsync(senhaAtual, email);
+            if (senhaAtualECorreta.Equals(false))
+                return new BadRequestResult();
+
+            Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.Email.Equals(email));
+            _auth.TransformarSenhaEmHashESalt(senhaNova, out hash, out salt);
+            usuario.Hash = hash;
+            usuario.Salt = salt;
+            await _context.SaveChangesAsync();
+            return new AcceptedResult();
+        }
+
+        public async Task<ActionResult<UsuarioDisplayDTO>> DisplayMeuUsuarioAsync(string email) 
+        {
+            Usuario usuario = await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email));
+            UsuarioDisplayDTO usuarioDisplay = new UsuarioDisplayDTO()
+            {
+                Nome = usuario.Nome,
+                Sobrenome = usuario.Sobrenome,
+                Email = email,
+                Foto = usuario.Foto,
+                Nivel = usuario.Nivel.ToString(),
+                DataDeCriacao = usuario.DataDeCriacao.ToString("dd/MM/yyyy"),
+            };
+            return new OkObjectResult(usuarioDisplay);
+        }
+
+        public async Task<ActionResult<List<UsuarioDisplayDTO>>> DisplayUsuariosAsync() 
+        {
+            List<Usuario> usuarios = await _context.Usuarios.ToListAsync();
+            List<UsuarioDisplayDTO> usuariosDisplay = new List<UsuarioDisplayDTO>();
+
+            foreach(Usuario usuario in usuarios) 
+            {
+                usuariosDisplay.Add(new UsuarioDisplayDTO() 
+                {
+                    Nome = usuario.Nome,
+                    Sobrenome = usuario.Sobrenome,
+                    Email = usuario.Email,
+                    Foto = usuario.Foto,
+                    Nivel = usuario.Nivel.ToString(),
+                    DataDeCriacao = usuario.DataDeCriacao.ToString("dd/MM/yyyy"),
+                });
+            }
+            return new OkObjectResult(usuariosDisplay);
         }
     }
 }

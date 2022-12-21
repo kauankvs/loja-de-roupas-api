@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LojaDeRoupasAPI.DTOs
 {
-    public class Estoque
+    public class EstoqueDTO
     {
         [JsonProperty("tamanho")]
         [JsonConverter(typeof(StringEnumConverter))]

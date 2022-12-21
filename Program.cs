@@ -1,6 +1,7 @@
 using LojaDeRoupasAPI;
 using LojaDeRoupasAPI.Context;
 using LojaDeRoupasAPI.Services;
+using LojaDeRoupasAPI.Services.Intefaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

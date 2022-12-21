@@ -1,6 +1,6 @@
 ﻿using LojaDeRoupasAPI.DTOs;
 using LojaDeRoupasAPI.Models;
-using LojaDeRoupasAPI.Services;
+using LojaDeRoupasAPI.Services.Intefaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +34,34 @@ namespace LojaDeRoupasAPI.Controllers
         [HttpDelete]
         [Route("delete")]
         [Authorize]
-        public async Task<ActionResult<Usuario>> DeletarUsuarioAsync(string senha)
+        public async Task<ActionResult> DeletarUsuarioAsync(string senha)
             => await _service.DeletarUsuarioAsync(User.FindFirstValue(ClaimTypes.Email), senha);
+
+        [HttpPut]
+        [Route("mudar/email")]
+        [Authorize]
+        public async Task<ActionResult<Usuario>> MudarEmailDaContaAsync(string emailNovo)
+            => await _service.MudarEmailDaContaAsync(User.FindFirstValue(ClaimTypes.Email), emailNovo);
+
+        [HttpPut]
+        [Route("mudar/senha")]
+        [Authorize]
+        public async Task<ActionResult<Usuario>> MudarSenhaDaContaAsync(string senhaAtual, string senhaNova)
+            => await _service.MudarSenhaDaContaAsync(User.FindFirstValue(ClaimTypes.Email), senhaAtual, senhaNova);
+
+        [HttpGet]
+        [Route("conta")]
+        [Authorize]
+        public async Task<ActionResult<UsuarioDisplayDTO>> DisplayMeuUsuarioAsync()
+            => await _service.DisplayMeuUsuarioAsync(User.FindFirstValue(ClaimTypes.Email));
+
+        [HttpGet]
+        [Route("usuarios")]
+        [Authorize(Roles = "Um, Dois")]
+        public async Task<ActionResult<List<UsuarioDisplayDTO>>> DisplayUsuariosAsync() 
+            => await _service.DisplayUsuariosAsync();
+
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using LojaDeRoupasAPI.Context;
 using LojaDeRoupasAPI.Models;
+using LojaDeRoupasAPI.Services.Intefaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
