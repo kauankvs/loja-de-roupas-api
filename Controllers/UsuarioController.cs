@@ -73,7 +73,5 @@ namespace LojaDeRoupasAPI.Controllers
         public async Task<ActionResult<List<UsuarioDisplayDTO>>> DisplayUsuariosAsync() 
             => await _service.DisplayUsuariosAsync();
 
-        
-
     }
 }

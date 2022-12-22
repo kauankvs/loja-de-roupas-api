@@ -6,7 +6,7 @@ namespace LojaDeRoupasAPI.Models
     public class Estoque
     {
         [Key]
-        public int QuantidadePorTamanhoId { get; set; }
+        public int EstoqueId { get; set; }
         public Tamanho Tamanho { get; set; }
         public int Quantidade { get; set; }
         public int ProdutoId { get; set; }

@@ -11,7 +11,11 @@ namespace LojaDeRoupasAPI.DTOs
         [Required(ErrorMessage = "Esse campo é obrigatório!")]
         [DataType(DataType.ImageUrl)]
         public string Imagem { get; set; }
+
         public string? Descricao { get; set; }
+
+        [Required(ErrorMessage = "Esse campo é obrigatório!")]
+        public string Marca { get; set; }
 
         [Required(ErrorMessage = "Esse campo é obrigatório!")]
         [DataType(DataType.Currency)]
