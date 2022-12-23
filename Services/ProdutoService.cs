@@ -24,6 +24,8 @@ namespace LojaDeRoupasAPI.Services
                 Preco = produtoInput.Preco,
                 Tipos = produtoInput.Tipos,
             };
+            await _context.Produtos.AddAsync(produto);
+            await _context.SaveChangesAsync();
             return new CreatedResult(nameof(ProdutoController), produto);
         }
 
@@ -54,6 +56,35 @@ namespace LojaDeRoupasAPI.Services
                 return new NoContentResult();
 
             return new OkObjectResult(produtos);
+        }
+
+        public async Task<ActionResult<List<Produto>>> SelecionarProdutosPorMarcaAsync(string marca)
+        {
+            List<Produto>? produtos = await _context.Produtos.AsNoTracking().Where(produto => produto.Marca.Equals(marca)).ToListAsync();
+            if (produtos.Equals(null))
+                return new NoContentResult();
+
+            return new OkObjectResult(produtos);
+        }
+
+        public async Task<ActionResult<List<Produto>>> SelecionarProdutosPorTipoAsync(Tipo tipo)
+        {
+            List<Produto>? produtos = await _context.Produtos.AsNoTracking().Where(produto => produto.Tipos.Contains(tipo)).ToListAsync();
+            if (produtos.Equals(null))
+                return new NoContentResult();
+
+            return new OkObjectResult(produtos);
+        }
+
+        public async Task<ActionResult> MudarPrecoDeProduto(int id, double preco) 
+        {
+            Produto? produto = await _context.Produtos.FirstOrDefaultAsync(produto => produto.ProdutoId.Equals(id));
+            if (produto.Equals(null))
+                return new BadRequestResult();
+
+            produto.Preco = preco;
+            await _context.SaveChangesAsync();
+            return new AcceptedResult();
         }
     }
 }

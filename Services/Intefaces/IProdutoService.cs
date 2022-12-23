@@ -1,8 +1,7 @@
-﻿using LojaDeRoupasAPI.Controllers;
-using LojaDeRoupasAPI.DTOs;
+﻿using LojaDeRoupasAPI.DTOs;
+using LojaDeRoupasAPI.Enums;
 using LojaDeRoupasAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LojaDeRoupasAPI.Services.Intefaces
 {
@@ -12,5 +11,8 @@ namespace LojaDeRoupasAPI.Services.Intefaces
         public Task<ActionResult> DeletarProdutoAsync(int id);
         public Task<ActionResult<Produto>> SelecionarProdutoAsync(int id);
         public Task<ActionResult<List<Produto>>> SelecionarTodosProdutosAsync();
+        public Task<ActionResult<List<Produto>>> SelecionarProdutosPorMarcaAsync(string marca);
+        public Task<ActionResult<List<Produto>>> SelecionarProdutosPorTipoAsync(Tipo tipo);
+        public Task<ActionResult> MudarPrecoDeProduto(int id, double preco);
     }
 }
