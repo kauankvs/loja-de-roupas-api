@@ -13,6 +13,6 @@ namespace LojaDeRoupasAPI.Services.Intefaces
         public Task<ActionResult<List<Produto>>> SelecionarTodosProdutosAsync();
         public Task<ActionResult<List<Produto>>> SelecionarProdutosPorMarcaAsync(string marca);
         public Task<ActionResult<List<Produto>>> SelecionarProdutosPorTipoAsync(Tipo tipo);
-        public Task<ActionResult> MudarPrecoDeProduto(int id, double preco);
+        public Task<ActionResult> AlterarPrecoDeProduto(int id, double preco);
     }
 }

@@ -30,8 +30,8 @@ namespace LojaDeRoupasAPI.Controllers
         [HttpPut]
         [Route("alterar/preco")]
         [Authorize(Roles = "Tres")]
-        public async Task<ActionResult> MudarPrecoDeProduto(int id, double preco)
-            => await _service.MudarPrecoDeProduto(id, preco);
+        public async Task<ActionResult> AlterarPrecoDeProduto(int id, double preco)
+            => await _service.AlterarPrecoDeProduto(id, preco);
 
         [HttpGet]
         [Route("{id}")]

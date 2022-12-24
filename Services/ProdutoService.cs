@@ -76,7 +76,7 @@ namespace LojaDeRoupasAPI.Services
             return new OkObjectResult(produtos);
         }
 
-        public async Task<ActionResult> MudarPrecoDeProduto(int id, double preco) 
+        public async Task<ActionResult> AlterarPrecoDeProduto(int id, double preco) 
         {
             Produto? produto = await _context.Produtos.FirstOrDefaultAsync(produto => produto.ProdutoId.Equals(id));
             if (produto.Equals(null))
