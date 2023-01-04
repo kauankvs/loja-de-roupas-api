@@ -22,7 +22,7 @@ namespace LojaDeRoupasAPI.Services
                 Descricao = produtoInput.Descricao,
                 Marca = produtoInput.Marca,
                 Preco = produtoInput.Preco,
-                Tipos = produtoInput.Tipos,
+                Tipo = produtoInput.Tipo,
             };
             await _context.Produtos.AddAsync(produto);
             await _context.SaveChangesAsync();
@@ -69,7 +69,7 @@ namespace LojaDeRoupasAPI.Services
 
         public async Task<ActionResult<List<Produto>>> SelecionarProdutosPorTipoAsync(Tipo tipo)
         {
-            List<Produto>? produtos = await _context.Produtos.AsNoTracking().Where(produto => produto.Tipos.Contains(tipo)).ToListAsync();
+            List<Produto>? produtos = await _context.Produtos.AsNoTracking().Where(produto => produto.Tipo.Equals(tipo)).ToListAsync();
             if (produtos.Equals(null))
                 return new NoContentResult();
 

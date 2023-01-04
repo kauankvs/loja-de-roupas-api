@@ -18,5 +18,17 @@
         Meia,
         Chapeu,
         Jeans,
+        Bolsa,
+        Oculos,
+        Pulseira,
+        Colar,
+        Cordao,
+        Perfume,
+        Creme, 
+        Maquiagem,
+        Botom, 
+        Sombras,
+        Hidratante,
+        Rimel,
     }
 }

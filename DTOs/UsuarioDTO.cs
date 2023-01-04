@@ -20,5 +20,8 @@ namespace LojaDeRoupasAPI.DTOs
         [Required(ErrorMessage = "Esse campo é obrigatório!")]
         [DataType(DataType.Password)]
         public string Senha { get; set; }
+
+        [Required(ErrorMessage = "Esse campo é obrigatório!")]
+        public int Idade { get; set; }
     }
 }

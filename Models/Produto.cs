@@ -11,7 +11,7 @@ namespace LojaDeRoupasAPI.Models
         public string? Descricao { get; set; }
         public string Marca { get; set; }
         public double Preco { get; set; }
-        public Tipo[] Tipos { get; set; }
+        public Tipo Tipo { get; set; }
         public List<Estoque>? Estoque { get; set; }
     }
 }

@@ -24,6 +24,6 @@ namespace LojaDeRoupasAPI.DTOs
         [JsonProperty("tipos")]
         [JsonConverter(typeof(StringEnumConverter))]
         [Required(ErrorMessage = "Esse campo é obrigatório!")]
-        public Tipo[] Tipos { get; set; }
+        public Tipo Tipo { get; set; }
     }
 }

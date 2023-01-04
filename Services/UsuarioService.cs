@@ -41,6 +41,7 @@ namespace LojaDeRoupasAPI.Services
                 Email = usuarioInput.Email,
                 Hash = hash,
                 Salt = salt,
+                Idade = usuarioInput.Idade,
                 Nivel = NivelDeAutorizacao.Tres,
                 DataDeCriacao = DateTime.Now,
             };
