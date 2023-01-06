@@ -18,17 +18,13 @@ namespace LojaDeRoupasAPI.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> FazerLoginAsync(string email, string senha) 
-        {
-            var token = await _service.FazerLoginAsync(email, senha);
-            HttpContext.Session.SetString("Token", token.ToString());
-            return new OkObjectResult(token);
-        }
+        public async Task<ActionResult<string>> FazerLoginAsync([FromForm] UsuarioParaLoginDTO usuario) 
+            => await _service.FazerLoginAsync(usuario);
 
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]
-        public async Task<ActionResult<Usuario>> CriarContaAsync(UsuarioDTO usuarioInput)
+        public async Task<ActionResult<Usuario>> CriarContaAsync([FromForm] UsuarioDTO usuarioInput)
             => await _service.CriarContaAsync(usuarioInput);  
         
         [HttpDelete]

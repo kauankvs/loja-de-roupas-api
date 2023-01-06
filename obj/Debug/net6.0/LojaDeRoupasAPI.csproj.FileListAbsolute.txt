@@ -82,3 +82,4 @@ C:\Users\kauan\Downloads\projeto-c\LojaDeRoupasAPI\LojaDeRoupasAPI\obj\Debug\net
 C:\Users\kauan\Downloads\projeto-c\LojaDeRoupasAPI\LojaDeRoupasAPI\obj\Debug\net6.0\LojaDeRoupasAPI.pdb
 C:\Users\kauan\Downloads\projeto-c\LojaDeRoupasAPI\LojaDeRoupasAPI\obj\Debug\net6.0\LojaDeRoupasAPI.genruntimeconfig.cache
 C:\Users\kauan\Downloads\projeto-c\LojaDeRoupasAPI\LojaDeRoupasAPI\obj\Debug\net6.0\ref\LojaDeRoupasAPI.dll
+C:\Users\kauan\Downloads\projeto-c\LojaDeRoupasAPI\LojaDeRoupasAPI\bin\Debug\net6.0\BCrypt.Net-Next.dll

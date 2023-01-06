@@ -1,9 +1,9 @@
-﻿using LojaDeRoupasAPI.Context;
+﻿using BCrypt.Net;
+using LojaDeRoupasAPI.Context;
 using LojaDeRoupasAPI.Models;
 using LojaDeRoupasAPI.Services.Intefaces;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
+
 
 namespace LojaDeRoupasAPI.Services
 {
@@ -15,11 +15,8 @@ namespace LojaDeRoupasAPI.Services
         public async Task<bool> VerificarSeSenhaECorretaAsync(string senha, string email)
         {
             Usuario? usuario = await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email));
-            using (var hmac = new HMACSHA512(usuario.Salt))
-            {
-                var hashComputado = hmac.ComputeHash(Encoding.UTF8.GetBytes(senha));
-                return hashComputado.Equals(usuario.Hash);
-            }
+            bool senhaECorreta = BCrypt.Net.BCrypt.Verify(senha, usuario.Hash);
+            return senhaECorreta;
         }
         public async Task<bool> VerificarSeUsuarioExisteAsync(string email)
         {

@@ -42,7 +42,8 @@ namespace LojaDeRoupasAPI.Controllers
         [HttpGet]
         [Route("todos")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<Produto>>> SelecionarTodosProdutosAsync() => await _service.SelecionarTodosProdutosAsync();
+        public async Task<ActionResult<List<Produto>>> SelecionarTodosProdutosAsync() 
+            => await _service.SelecionarTodosProdutosAsync();
 
         [HttpGet]
         [Route("{marca}")]

@@ -1,4 +1,5 @@
-﻿using LojaDeRoupasAPI.Context;
+﻿using BCrypt.Net;
+using LojaDeRoupasAPI.Context;
 using LojaDeRoupasAPI.Controllers;
 using LojaDeRoupasAPI.DTOs;
 using LojaDeRoupasAPI.Enums;
@@ -6,10 +7,6 @@ using LojaDeRoupasAPI.Models;
 using LojaDeRoupasAPI.Services.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
-using System.Globalization;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace LojaDeRoupasAPI.Services
 {
@@ -27,12 +24,11 @@ namespace LojaDeRoupasAPI.Services
 
         public async Task<ActionResult<Usuario>> CriarContaAsync(UsuarioDTO usuarioInput)
         {
-            byte[] hash, salt;
             bool usuarioExiste = await _usuarioAuth.VerificarSeUsuarioExisteAsync(usuarioInput.Email);
             if (usuarioExiste.Equals(true))
                 return new ConflictResult();
 
-            _auth.TransformarSenhaEmHashESalt(usuarioInput.Senha, out hash, out salt);
+            string hash = BCrypt.Net.BCrypt.HashPassword(usuarioInput.Senha);
             Usuario usuario = new Usuario()
             {
                 Nome = usuarioInput.Nome,
@@ -40,7 +36,6 @@ namespace LojaDeRoupasAPI.Services
                 Foto = usuarioInput.Foto,
                 Email = usuarioInput.Email,
                 Hash = hash,
-                Salt = salt,
                 Idade = usuarioInput.Idade,
                 Nivel = NivelDeAutorizacao.Tres,
                 DataDeCriacao = DateTime.Now,
@@ -51,18 +46,18 @@ namespace LojaDeRoupasAPI.Services
             return new CreatedResult(nameof(UsuarioController), usuario);
         }
 
-        public async Task<ActionResult<string>> FazerLoginAsync(string email, string senha)
+        public async Task<ActionResult<string>> FazerLoginAsync(UsuarioParaLoginDTO usuario)
         {
-            bool usuarioExiste = await _usuarioAuth.VerificarSeUsuarioExisteAsync(email);
+            bool usuarioExiste = await _usuarioAuth.VerificarSeUsuarioExisteAsync(usuario.Email);
             if (usuarioExiste.Equals(false))
                 return new NotFoundResult();
 
-            bool senheCorreta = await _usuarioAuth.VerificarSeSenhaECorretaAsync(senha, email);
+            bool senheCorreta = await _usuarioAuth.VerificarSeSenhaECorretaAsync(usuario.Senha, usuario.Email);
             if (senheCorreta.Equals(false))
                 return new ConflictResult();
 
-            var token = await _auth.CriarTokenAsync(email);
-            return token;
+            var token = await _auth.CriarTokenAsync(usuario.Email);
+            return new OkObjectResult(token);
         }
 
         public async Task<ActionResult> DeletarUsuarioAsync(string email, string senha)
@@ -90,15 +85,14 @@ namespace LojaDeRoupasAPI.Services
 
         public async Task<ActionResult> MudarSenhaDaContaAsync(string email, string senhaAtual, string senhaNova) 
         {
-            byte[] hash, salt;
             bool senhaAtualECorreta = await _usuarioAuth.VerificarSeSenhaECorretaAsync(senhaAtual, email);
             if (senhaAtualECorreta.Equals(false))
                 return new BadRequestResult();
 
             Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(user => user.Email.Equals(email));
-            _auth.TransformarSenhaEmHashESalt(senhaNova, out hash, out salt);
+            string hash = BCrypt.Net.BCrypt.HashPassword(senhaNova);
+
             usuario.Hash = hash;
-            usuario.Salt = salt;
             await _context.SaveChangesAsync();
             return new AcceptedResult();
         }

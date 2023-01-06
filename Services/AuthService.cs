@@ -16,15 +16,6 @@ namespace LojaDeRoupasAPI.Services
 
         public AuthService(LojaContext context) => _context = context;
 
-        public void TransformarSenhaEmHashESalt(string senha, out byte[] senhaHash, out byte[] senhaSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                senhaSalt = hmac.Key;
-                senhaHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(senha));
-            }
-        }
-
         public async Task<string> CriarTokenAsync(string email)
         {
             Usuario usuario = await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email));

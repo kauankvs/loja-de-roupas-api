@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "CH7m52NXhI9RIfzWTgecVKf1n9Del4BpsdGRtzU4kXD5e/85slWKo+7blPFV1DEjopLm5tkOr2YEs4qg1gPBaA==",
+  "dgSpecHash": "j8/aTzy16/NYWpBBLlqqUDmiWzEnWmeg1d18Myzp8chwnRx/RJ5PwB+7GnarzuCYvdvGnpInP6auMB0rxp7ORg==",
   "success": true,
   "projectFilePath": "C:\\Users\\kauan\\Downloads\\projeto-c\\LojaDeRoupasAPI\\LojaDeRoupasAPI\\LojaDeRoupasAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kauan\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\kauan\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.12\\microsoft.aspnetcore.authentication.jwtbearer.6.0.12.nupkg.sha512",
     "C:\\Users\\kauan\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

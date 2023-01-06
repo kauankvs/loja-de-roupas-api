@@ -2,8 +2,8 @@
 {
     public enum NivelDeAutorizacao
     {
-        Um,
-        Dois,
-        Tres,
+        Um = 1,
+        Dois = 2,
+        Tres = 3,
     }
 }
