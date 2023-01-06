@@ -21,8 +21,6 @@ namespace LojaDeRoupasAPI.DTOs
         [DataType(DataType.Currency)]
         public double Preco { get; set; }
 
-        [JsonProperty("tipos")]
-        [JsonConverter(typeof(StringEnumConverter))]
         [Required(ErrorMessage = "Esse campo é obrigatório!")]
         public Tipo Tipo { get; set; }
     }

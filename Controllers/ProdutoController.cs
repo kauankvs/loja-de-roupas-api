@@ -52,10 +52,10 @@ namespace LojaDeRoupasAPI.Controllers
             => await _service.SelecionarProdutosPorMarcaAsync(marca);
 
         [HttpGet]
-        [Route("{tipo}")]
+        [Route("tipo/{tipo}")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<Produto>>> SelecionarProdutosPorTipoAsync(Tipo tipo) 
-            => await _service.SelecionarProdutosPorTipoAsync(tipo);
+        public async Task<ActionResult<List<Produto>>> SelecionarProdutosPorTipoAsync(string tipo) 
+            => await _service.SelecionarProdutosPorTipoAsync((Tipo)Enum.Parse(typeof(Tipo), tipo));
 
     }
 }
