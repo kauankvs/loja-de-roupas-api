@@ -18,8 +18,15 @@ namespace LojaDeRoupasAPI.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> FazerLoginAsync([FromForm] UsuarioParaLoginDTO usuario) 
-            => await _service.FazerLoginAsync(usuario);
+        public async Task<ActionResult<string>> FazerLoginAsync([FromForm] UsuarioParaLoginDTO usuario)
+        {
+            string token = await _service.FazerLoginAsync(usuario);
+            HttpContext.Session.SetString("Token", token);
+            if (token.Equals(null))
+                return new BadRequestResult();
+
+            return new OkObjectResult(token);
+        }
 
         [HttpPost]
         [Route("register")]
