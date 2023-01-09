@@ -45,7 +45,7 @@ namespace LojaDeRoupasAPI.Services
             await _context.SaveChangesAsync();
             return new CreatedResult(nameof(UsuarioController), usuario);
         }
-
+        
         public async Task<string> FazerLoginAsync(UsuarioParaLoginDTO usuario)
         {
             bool usuarioExiste = await _usuarioAuth.VerificarSeUsuarioExisteAsync(usuario.Email);

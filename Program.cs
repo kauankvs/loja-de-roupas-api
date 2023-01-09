@@ -23,7 +23,7 @@ builder.Services.AddDbContext<LojaContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAuthentication(auth =>
 {
     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -44,7 +44,9 @@ builder.Services.AddAuthentication(auth =>
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(5);
+    options.IdleTimeout = TimeSpan.FromMinutes(15);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.Expiration = TimeSpan.FromMinutes(15);
 });
 
 builder.Services.AddCors(options => options.AddPolicy(name: "LojaDeRoupasCORS", policy =>

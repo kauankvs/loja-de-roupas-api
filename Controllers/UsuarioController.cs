@@ -21,10 +21,10 @@ namespace LojaDeRoupasAPI.Controllers
         public async Task<ActionResult<string>> FazerLoginAsync([FromForm] UsuarioParaLoginDTO usuario)
         {
             string token = await _service.FazerLoginAsync(usuario);
-            HttpContext.Session.SetString("Token", token);
             if (token.Equals(null))
                 return new BadRequestResult();
 
+            HttpContext.Session.SetString("Token", token);
             return new OkObjectResult(token);
         }
 
