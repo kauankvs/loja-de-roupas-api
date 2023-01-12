@@ -7,6 +7,7 @@ using LojaDeRoupasAPI.Models;
 using LojaDeRoupasAPI.Services.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace LojaDeRoupasAPI.Services
 {
@@ -46,18 +47,18 @@ namespace LojaDeRoupasAPI.Services
             return new CreatedResult(nameof(UsuarioController), usuario);
         }
         
-        public async Task<string> FazerLoginAsync(UsuarioParaLoginDTO usuario)
+        public async Task<ActionResult> FazerLoginAsync(UsuarioParaLoginDTO usuario)
         {
             bool usuarioExiste = await _usuarioAuth.VerificarSeUsuarioExisteAsync(usuario.Email);
             if (usuarioExiste.Equals(false))
-                return null;
+                return new BadRequestObjectResult(usuario.Email);
 
             bool senheCorreta = await _usuarioAuth.VerificarSeSenhaECorretaAsync(usuario.Senha, usuario.Email);
             if (senheCorreta.Equals(false))
-                return null;
+                return new BadRequestObjectResult(usuario.Senha);
 
             var token = await _auth.CriarTokenAsync(usuario.Email);
-            return token;
+            return new OkObjectResult(token);
         }
 
         public async Task<ActionResult> DeletarUsuarioAsync(string email, string senha)

@@ -10,7 +10,7 @@ namespace LojaDeRoupasAPI.Services.Intefaces
     public interface IUsuarioService
     {
         public Task<ActionResult<Usuario>> CriarContaAsync(UsuarioDTO usuarioInput);
-        public Task<string> FazerLoginAsync(UsuarioParaLoginDTO usuario);
+        public Task<ActionResult> FazerLoginAsync(UsuarioParaLoginDTO usuario);
         public Task<ActionResult> DeletarUsuarioAsync(string email, string senha);
         public Task<ActionResult> MudarEmailDaContaAsync(string emailAtual, string emailNovo);
         public Task<ActionResult> MudarSenhaDaContaAsync(string email, string senhaAtual, string senhaNova);

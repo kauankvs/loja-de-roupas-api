@@ -23,7 +23,6 @@ builder.Services.AddDbContext<LojaContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-//builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAuthentication(auth =>
 {
     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -42,13 +41,6 @@ builder.Services.AddAuthentication(auth =>
         };
     });
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(15);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.Expiration = TimeSpan.FromMinutes(15);
-});
-
 builder.Services.AddCors(options => options.AddPolicy(name: "LojaDeRoupasCORS", policy =>
 {
     policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
@@ -61,14 +53,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseSession();
-app.Use(async (context, next) =>
-{
-    string token = context.Session.GetString("Token");
-    if (token != null)
-        context.Request.Headers.Add("Authorization", "Bearer " + token);
-    await next();
-});
+
 app.UseCors("LojaDeRoupasCORS");
 app.UseHttpsRedirection();
 app.UseAuthentication();
